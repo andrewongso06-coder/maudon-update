@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maudon Progress Report</title>
+<meta name="description" content="Laporan progress campaign Maudon: North Star, 4 ICP baru, dan konten yang lolos KPI. Disiapkan oleh BAIK Digital, 8 November 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F0E1; --cream-2:#EFE4CC; --yellow:#F2C14E; --yellow-soft:#FBE7B0;
+  --navy:#1E2A47; --navy-2:#2E3D63; --brick:#B4472F; --brick-soft:#F3D6CC;
+  --ink:#1E2A47; --muted:#5D6680; --line:#E3D7BC; --card:#FFFDF8;
+  --good:#2F7D5B; --good-soft:#D8EEE3; --bad:#B4472F; --bad-soft:#F6DDD5; --warn:#B7831A; --warn-soft:#FBEBC4;
+  --shadow:0 12px 32px -14px rgba(30,42,71,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:#131B2E;color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;letter-spacing:-.01em;line-height:1.08}
+a{color:inherit}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* 16:9 stage, scaled to fit any screen */
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform:translate(-50%,-50%) scale(var(--s,1));background:var(--cream);overflow:hidden;border-radius:2px}
+.slide{position:absolute;inset:0;padding:64px 96px 88px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(40px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1),visibility 0s .55s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.slide.prev{transform:translateX(-40px)}
+.a{opacity:0}
+.slide.on .a{animation:up .75s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 110ms + 150ms)}
+@keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-size:15px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--brick)}
+.h2{font-size:54px;margin:10px 0 12px;max-width:1300px}
+.lead{color:var(--muted);font-size:21px;max-width:1050px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;padding:7px 14px;border-radius:999px}
+.insight{padding:20px 24px;border-left:5px solid var(--yellow);background:var(--yellow-soft);border-radius:14px;font-size:19px}
+.note{font-size:15px;color:var(--muted)}
+
+/* cover */
+.cover{justify-content:center}
+.cover h1{font-size:96px;font-weight:800;max-width:1100px}
+.cover h1 em{font-style:normal;color:var(--brick)}
+.cover .lead{margin-top:24px;font-size:24px;max-width:900px}
+.meta{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.meta .pill{background:var(--card);border:1px solid var(--line);color:var(--navy)}
+.blob{position:absolute;border-radius:50%;z-index:0}
+.blob.b1{width:520px;height:520px;background:var(--yellow);right:-140px;top:-120px;animation:float 9s ease-in-out infinite}
+.blob.b2{width:240px;height:240px;background:var(--brick-soft);right:300px;top:330px;animation:float 11s ease-in-out infinite reverse}
+.blob.b3{width:160px;height:160px;background:var(--navy);right:90px;bottom:120px;animation:float 13s ease-in-out infinite}
+@keyframes float{50%{transform:translate(-20px,24px) scale(1.05)}}
+.cover>*:not(.blob){position:relative;z-index:1}
+
+/* north star */
+.ns-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:34px 0 26px}
+.ring-card{padding:32px;display:flex;align-items:center;gap:26px}
+.ring{position:relative;width:170px;height:170px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .track{stroke:var(--cream-2)}
+.ring .pct{position:absolute;inset:0;display:grid;place-items:center;font-family:"Fraunces",serif;font-weight:800;font-size:36px}
+.ring-card h3{font-size:30px}
+.ring-card .big{font-size:23px;font-weight:700;color:var(--navy);margin-top:8px}
+.ring-card p{font-size:17px;color:var(--muted)}
+
+/* compare */
+.toggle{display:inline-flex;background:var(--cream-2);border-radius:999px;padding:5px;margin-top:24px;align-self:flex-start}
+.toggle button{border:0;background:transparent;font:inherit;font-size:17px;font-weight:700;padding:11px 22px;border-radius:999px;cursor:pointer;color:var(--muted);transition:.25s}
+.toggle button.on{background:var(--navy);color:#fff}
+.cmp{padding:36px 40px;margin-top:22px}
+.cmp-row{margin-bottom:26px}
+.cmp-row .lbl{display:flex;justify-content:space-between;font-size:19px;font-weight:700;margin-bottom:10px}
+.cmp-bar{height:64px;background:var(--cream);border-radius:14px;overflow:hidden}
+.cmp-bar i{display:block;height:100%;width:0;border-radius:14px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.cmp-bar.new i{background:var(--brick)}
+.cmp-bar.old i{background:#9AA1B4}
+.cmp-verdict{display:flex;align-items:baseline;gap:18px;margin-top:6px}
+.cmp-verdict b{font-family:"Fraunces",serif;font-size:84px;color:var(--brick);line-height:1}
+.cmp-verdict span{font-size:24px;color:var(--navy);font-weight:600;max-width:700px}
+
+/* ICP */
+.icp-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:20px}
+.icp-tabs{display:flex;gap:10px}
+.icp-tabs button{border:1px solid var(--line);background:var(--card);font:inherit;font-weight:700;font-size:17px;padding:12px 20px;border-radius:14px;cursor:pointer;transition:.25s;color:var(--navy)}
+.icp-tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.hint{font-size:15px;color:var(--muted)}
+#icpDesc{font-size:18px;color:var(--muted);margin:16px 0 18px}
+.ads{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.ad{perspective:1400px;height:390px;cursor:pointer;opacity:0;transform:translateY(20px);animation:rise .55s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.ad-in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.ad.flip .ad-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.front{display:flex;flex-direction:column;padding:14px}
+.front .logo{font-family:"Fraunces",serif;font-weight:800;font-size:15px;letter-spacing:.2em;text-align:center}
+.front .tag{font-size:10px;font-weight:800;letter-spacing:.1em;text-align:center;margin-top:3px;opacity:.85}
+.front .stage{flex:1;display:grid;place-items:center;position:relative}
+.front .stage .disc{position:absolute;width:80%;aspect-ratio:1.25;border-radius:50%}
+.front .stage svg{position:relative;width:72%;transition:transform .4s}
+.ad:hover .front .stage svg{transform:scale(1.07) rotate(-2deg)}
+.front .hl{font-family:"Fraunces",serif;font-weight:800;font-size:18px;line-height:1.1;text-align:center;padding:10px 8px;border-radius:9px}
+.front .sub{font-size:12px;text-align:center;margin-top:7px;line-height:1.3}
+.front .cta{font-size:11px;font-weight:700;text-align:center;margin-top:7px;opacity:.9}
+.back{transform:rotateY(180deg);background:var(--navy);color:#fff;padding:20px;display:flex;flex-direction:column;gap:10px;font-size:16px}
+.back .k{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow)}
+.back p{line-height:1.45}
+.back .fn{margin-top:auto;font-size:12px;color:#AEB7CF}
+.status-new{margin-top:22px;padding:16px 22px;display:flex;gap:16px;align-items:center}
+.status-new p{font-size:17px;flex:1}
+.dot-live{width:14px;height:14px;border-radius:50%;background:var(--warn);flex:none;animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(183,131,26,.6)}70%{box-shadow:0 0 0 14px rgba(183,131,26,0)}100%{box-shadow:0 0 0 0 rgba(183,131,26,0)}}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brick);color:#fff;text-decoration:none;font-weight:700;font-size:16px;padding:12px 20px;border-radius:12px;transition:.2s;white-space:nowrap}
+.btn:hover{background:#9c3b26}
+
+/* winners */
+.sorter{display:flex;gap:10px;align-items:center;margin:14px 0 12px}
+.sorter span{font-size:16px;color:var(--muted);font-weight:600}
+.chip{border:1px solid var(--line);background:var(--card);font:inherit;font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;color:var(--navy)}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.win-list{display:flex;flex-direction:column;gap:6px}
+.win{display:grid;grid-template-columns:36px 1.3fr 1fr 1fr 110px;gap:26px;align-items:center;padding:7px 22px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.win .rank{font-family:"Fraunces",serif;font-weight:800;font-size:24px;color:var(--brick)}
+.win .name{font-weight:700;font-size:18px}
+.mbar{font-size:14px;color:var(--muted)}
+.mbar .t{display:flex;justify-content:space-between;margin-bottom:3px;line-height:1.3}
+.mbar .t b{color:var(--navy);font-size:15px}
+.mbar .tr{height:9px;background:var(--cream-2);border-radius:99px;position:relative}
+.mbar .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--good);width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.mbar .tr .kpi{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--navy);opacity:.55}
+.watch{font-size:15px;font-weight:700;text-decoration:none;padding:7px 14px;border-radius:10px;background:var(--yellow-soft);text-align:center}
+.watch:hover{background:var(--yellow)}
+.win-foot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:12px}
+.win-foot .insight{font-size:16px;padding:10px 18px;flex:1}
+.win-foot .note i{display:inline-block;width:14px;height:3px;background:var(--navy);opacity:.55;vertical-align:middle;margin-right:8px}
+
+/* paused */
+.paused-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:26px}
+.pg{padding:24px 28px;max-height:560px;overflow:auto}
+.pg h3{font-size:25px;display:flex;align-items:center;gap:12px}
+.pg>p{font-size:16px;color:var(--muted);margin:8px 0 14px}
+.acc{border-top:1px solid var(--line)}
+.acc button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;background:none;border:0;font:inherit;font-weight:700;font-size:17px;color:var(--navy);padding:12px 2px;cursor:pointer;text-align:left}
+.acc button .ar{transition:transform .3s;flex:none}
+.acc.open button .ar{transform:rotate(180deg)}
+.acc .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s}
+.acc.open .body{grid-template-rows:1fr}
+.acc .body>div{overflow:hidden}
+.wins{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2px 0 14px}
+.wcell{border-radius:10px;padding:9px;font-size:13px;text-align:center}
+.wcell b{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.wcell.ok{background:var(--good-soft);color:var(--good)}
+.wcell.no{background:var(--bad-soft);color:var(--bad)}
+.mini-pills{display:flex;gap:5px}
+.mini-pills i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.mini-pills i.ok{background:var(--good)}
+.mini-pills i.no{background:var(--bad)}
+
+/* budget */
+.budget{padding:34px 40px;margin-top:28px}
+.b-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px}
+.b-total>span{font-weight:700;font-size:20px}
+.b-total b{font-family:"Fraunces",serif;font-size:60px}
+.stack{display:flex;height:84px;border-radius:16px;overflow:hidden;gap:4px}
+.stack div{width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1),filter .2s;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;overflow:hidden}
+.stack div.hl{filter:brightness(1.15)}
+.b-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.b-item{display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:14px;border:1px solid var(--line);cursor:pointer;transition:.2s;background:var(--cream)}
+.b-item.hl{border-color:var(--navy);transform:translateY(-3px)}
+.b-item .sw{width:16px;height:16px;border-radius:5px;flex:none}
+.b-item .nm{font-size:17px;font-weight:700;flex:1}
+.b-item .nm small{display:block;color:var(--muted);font-weight:500;font-size:14px}
+.b-item .val{font-weight:800;font-size:17px}
+
+/* next */
+.next-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.step{padding:34px 32px}
+.step .n{font-family:"Fraunces",serif;font-weight:800;font-size:72px;color:var(--yellow);-webkit-text-stroke:1.5px var(--navy);line-height:1;margin-bottom:18px}
+.step h3{font-size:27px;margin-bottom:12px}
+.step p{font-size:18px;color:var(--muted)}
+
+/* closing */
+.closing{background:var(--navy);color:#fff;justify-content:center;align-items:center;text-align:center}
+.closing h2{font-size:92px}
+.closing h2 em{font-style:normal;color:var(--yellow)}
+.closing p{font-size:24px;color:#C9D0E3;margin-top:22px}
+.closing .sig{margin-top:60px;font-size:18px;color:#AEB7CF}
+.closing .sig b{color:#fff;font-family:"Fraunces",serif;font-size:26px;display:block;margin-bottom:6px}
+
+/* chrome */
+.ctrl{position:fixed;right:18px;bottom:16px;display:flex;align-items:center;gap:8px;z-index:20;transition:opacity .4s}
+.ctrl button{width:42px;height:42px;border-radius:12px;border:0;background:rgba(30,42,71,.88);color:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center}
+.ctrl button:hover{background:var(--brick)}
+.ctrl .cnt{background:rgba(30,42,71,.88);color:#fff;font-weight:700;font-size:14px;padding:11px 14px;border-radius:12px;font-variant-numeric:tabular-nums}
+body.idle .ctrl{opacity:0}
+body.idle{cursor:none}
+.pbar{position:absolute;left:0;bottom:0;height:5px;background:var(--brick);transition:width .55s cubic-bezier(.2,.8,.2,1);z-index:5}
+.dots{position:absolute;left:96px;bottom:36px;display:flex;gap:8px;z-index:5}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);transition:.3s;cursor:pointer}
+.dots i.on{background:var(--brick);width:28px;border-radius:5px}
+.foot{position:absolute;right:96px;bottom:30px;font-size:14px;color:var(--muted);z-index:5}
+.foot b{color:var(--navy)}
+.dark-ui .dots i{background:#3B4A72}.dark-ui .dots i.on{background:var(--yellow)}.dark-ui .foot{color:#AEB7CF}.dark-ui .foot b{color:#fff}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.a,.ad{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 COVER -->
+<section class="slide cover">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="eyebrow a">Laporan Progress · 8 November 2026</div>
+  <h1 class="a" style="margin-top:18px">Konten Maudon makin <em>nempel</em>, biayanya makin efisien.</h1>
+  <p class="lead a">Campaign testing sejak 22 Oktober konsisten mengalahkan campaign lama. Minggu ini kami tambah 4 persona baru dan merampingkan struktur supaya budget fokus ke konten yang terbukti bekerja.</p>
+  <div class="meta a">
+    <span class="pill">Campaign: Top &amp; Mid of Funnel</span>
+    <span class="pill">22 Okt – 8 Nov (18 hari)</span>
+    <span class="pill">Sumber: Meta API langsung</span>
+  </div>
+</section>
+
+<!-- 2 NORTH STAR -->
+<section class="slide">
+  <div class="eyebrow a">01 · North Star</div>
+  <h2 class="h2 a">Target fase testing: Rp15 Jt, 1.000 save, 1.000 share</h2>
+  <p class="lead a">Save dan share adalah tanda konten benar-benar disukai. Ini ukuran awal sebelum budget dinaikkan untuk scaling.</p>
+  <div class="ns-grid">
+    <div class="card ring-card a" data-ring="36.7" data-color="#1E2A47"><div class="ring"><svg width="170" height="170"><circle class="track" cx="85" cy="85" r="72" fill="none" stroke-width="15"/><circle class="rbar" cx="85" cy="85" r="72" fill="none" stroke-width="15" stroke-linecap="round"/></svg><div class="pct tnum">0%</div></div><div><h3>Spend</h3><div class="big tnum">Rp5,50 Jt</div><p>dari Rp15 Jt</p></div></div>
+    <div class="card ring-card a" data-ring="44.3" data-color="#B4472F"><div class="ring"><svg width="170" height="170"><circle class="track" cx="85" cy="85" r="72" fill="none" stroke-width="15"/><circle class="rbar" cx="85" cy="85" r="72" fill="none" stroke-width="15" stroke-linecap="round"/></svg><div class="pct tnum">0%</div></div><div><h3>Save</h3><div class="big tnum"><span data-count="443">0</span> save</div><p>dari 1.000</p></div></div>
+    <div class="card ring-card a" data-ring="35.5" data-color="#D9A633"><div class="ring"><svg width="170" height="170"><circle class="track" cx="85" cy="85" r="72" fill="none" stroke-width="15"/><circle class="rbar" cx="85" cy="85" r="72" fill="none" stroke-width="15" stroke-linecap="round"/></svg><div class="pct tnum">0%</div></div><div><h3>Share</h3><div class="big tnum"><span data-count="355">0</span> share</div><p>dari 1.000</p></div></div>
+  </div>
+  <div class="insight a"><b>Baca cepat:</b> progres save (44,3%) lebih cepat dari progres spend (36,7%). Artinya tiap rupiah makin efisien menghasilkan save. Share masih sejalan dengan spend, jadi ini yang kami dorong berikutnya.</div>
+  <p class="note a" style="margin-top:14px">Campaign ini untuk awareness (top &amp; mid funnel). Pixel konversi penjualan belum terpasang, jadi penjualan belum diukur langsung dari iklan.</p>
+</section>
+
+<!-- 3 COMPARE -->
+<section class="slide">
+  <div class="eyebrow a">02 · Baru vs Lama</div>
+  <h2 class="h2 a">Periode sama, hasil jauh beda</h2>
+  <p class="lead a">Pembanding: campaign "Instagram Post", campaign terbesar Maudon sebelum testing dimulai. Periode identik, 21 Okt – 8 Nov 2026.</p>
+  <div class="toggle a" id="cmpToggle">
+    <button data-k="save" class="on">Jumlah save</button>
+    <button data-k="share">Jumlah share</button>
+    <button data-k="cps">Biaya per save</button>
+    <button data-k="cpsh">Biaya per share</button>
+    <button data-k="spend">Spend</button>
+  </div>
+  <div class="card cmp a">
+    <div class="cmp-row"><div class="lbl"><span>Campaign testing (baru)</span><span id="cmpNewV" class="tnum"></span></div><div class="cmp-bar new"><i id="cmpNew"></i></div></div>
+    <div class="cmp-row"><div class="lbl"><span>Campaign lama</span><span id="cmpOldV" class="tnum"></span></div><div class="cmp-bar old"><i id="cmpOld"></i></div></div>
+    <div class="cmp-verdict"><b id="cmpX" class="tnum">4,3x</b><span id="cmpTxt"></span></div>
+  </div>
+</section>
+
+<!-- 4 ICP -->
+<section class="slide" data-k="icp">
+  <div class="eyebrow a">03 · 4 ICP Baru</div>
+  <h2 class="h2 a">20 iklan dari foto produk Maudon, 5 untuk tiap persona</h2>
+  <div class="icp-top a">
+    <div class="icp-tabs" id="icpTabs"></div>
+    <div class="hint">Klik kartu untuk lihat teks iklannya ↻</div>
+  </div>
+  <p id="icpDesc" class="a"></p>
+  <div class="ads" id="ads"></div>
+  <div class="card status-new a">
+    <div class="dot-live"></div>
+    <p><b>Status: masih terlalu baru untuk dinilai.</b> Baru dinyalakan hari ini, diuji di 2 pendekatan (follower/engager Maudon dan interest + lokasi). Kami nilai setelah 3–5 hari.</p>
+    <a class="btn" href="https://drive.google.com/drive/folders/1oNmjRtqSUr8iNk3GdWYYj3_ls5bqE-Qy" target="_blank" rel="noopener">Lihat 20 gambar di Drive →</a>
+  </div>
+</section>
+
+<!-- 5 WINNERS -->
+<section class="slide" data-k="win">
+  <div class="eyebrow a">04 · Konten Juara</div>
+  <h2 class="h2 a">8 konten yang lolos KPI</h2>
+  <p class="lead a">Lolos = biaya per save <b>dan</b> per share di bawah Rp15.000. Dipakai lagi untuk audience baru dan retargeting.</p>
+  <div class="sorter a">
+    <span>Urutkan:</span>
+    <button class="chip on" data-s="cps">Per save termurah</button>
+    <button class="chip" data-s="cpsh">Per share termurah</button>
+    <button class="chip" data-s="avg">Rata-rata terbaik</button>
+  </div>
+  <div class="win-list a" id="winList"></div>
+  <div class="win-foot a">
+    <div class="insight"><b>Pola yang jelas:</b> konten brand sendiri (Existing Reels &amp; Social Proof) konsisten lebih murah dibanding konten whitelisting kreator.</div>
+    <div class="note"><i></i>Garis = batas KPI Rp15.000</div>
+  </div>
+</section>
+
+<!-- 6 PAUSED -->
+<section class="slide">
+  <div class="eyebrow a">05 · Dirampingkan</div>
+  <h2 class="h2 a">10 ad set dievaluasi: 6 di-pause, 4 lanjut jalan</h2>
+  <p class="lead a">Dicek di 4 periode: hari ini, kemarin, 3 hari, 7 hari. Konten yang lemah di sebagian besar periode di-pause. Yang masih bagus di 7 hari dipertahankan.</p>
+  <div class="paused-grid">
+    <div class="card pg a">
+      <h3><span class="pill" style="background:var(--bad-soft);color:var(--bad)">6</span> Di-pause: konsisten lemah</h3>
+      <p>Gagal di hampir semua periode, budget dialihkan.</p>
+      <div id="pWeak"></div>
+    </div>
+    <div class="card pg a">
+      <h3><span class="pill" style="background:var(--good-soft);color:var(--good)">4</span> Tetap jalan, Rp20rb/hari</h3>
+      <p>Bagus di 7 hari, cuma naik tipis 1–2 hari terakhir karena volume harian masih kecil. Fluktuasi biasa.</p>
+      <div id="pBorder"></div>
+    </div>
+  </div>
+  <p class="note a" style="margin-top:14px">Kotak hijau/merah = lolos/gagal per periode. "Existing Reels – Kokyruma" lolos di keempat periode dan tetap jalan.</p>
+</section>
+
+<!-- 7 BUDGET -->
+<section class="slide" data-k="budget">
+  <div class="eyebrow a">06 · Budget Harian</div>
+  <h2 class="h2 a">Struktur baru: 18 ad set aktif</h2>
+  <p class="lead a">Budget sekarang terbagi ke persona baru, konten juara, retargeting, dan konten lama yang masih efisien.</p>
+  <div class="card budget a">
+    <div class="b-total"><span>Total budget aktif per hari</span><b class="tnum">Rp<span data-count="440" data-suffix=".000">0</span></b></div>
+    <div class="stack" id="stack"></div>
+    <div class="b-legend" id="bLegend"></div>
+  </div>
+  <p class="note a" style="margin-top:14px">North Star Rp15 Jt menghitung budget testing konten original. Lapisan ICP dan struktur baru mulai hari ini, progresnya kami laporkan terpisah.</p>
+</section>
+
+<!-- 8 NEXT -->
+<section class="slide">
+  <div class="eyebrow a">07 · Langkah Berikut</div>
+  <h2 class="h2 a">Rekomendasi kami</h2>
+  <div class="next-grid">
+    <div class="card step a"><div class="n">1</div><h3>Biarkan 4 ICP jalan 3–5 hari</h3><p>Data belum cukup. Setelah itu kami tunjukkan persona mana yang paling efisien dan pindahkan budget ke sana.</p></div>
+    <div class="card step a"><div class="n">2</div><h3>Selesaikan konten dari brief yang sudah dikirim</h3><p>Existing Reels dan Social Proof (konten brand sendiri) terbukti paling murah. Brief untuk konten dengan format serupa sudah kami kirim. Mohon dibantu diselesaikan segera supaya bisa langsung kami uji.</p></div>
+    <div class="card step a"><div class="n">3</div><h3>Pantau 4 konten lama yang dinyalakan kembali</h3><p>Kami nilai pakai periode 7 hari, bukan harian. Kalau dalam seminggu biaya per save/share tetap di atas target, baru kami pause.</p></div>
+  </div>
+</section>
+
+<!-- 9 CLOSING -->
+<section class="slide closing" data-dark>
+  <h2 class="a">Terima kasih, <em>Maudon</em>.</h2>
+  <p class="a">Update berikutnya: hasil 4 ICP setelah 3–5 hari berjalan.</p>
+  <div class="sig a"><b>BAIK Digital</b>Your digital strategic buddy · baikdigital.id</div>
+</section>
+
+<div class="dots" id="dots"></div>
+<div class="foot"><b>MAUDON × BAIK</b> · Data per 8 Nov 2026</div>
+<div class="pbar" id="pbar"></div>
+</div>
+
+<div class="ctrl">
+  <button id="prev" aria-label="Sebelumnya">←</button>
+  <span class="cnt" id="cnt">01 / 09</span>
+  <button id="next" aria-label="Berikutnya">→</button>
+  <button id="fs" aria-label="Layar penuh" title="Layar penuh (F)">⛶</button>
+</div>
+
+<script>
+(function(){
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = n => n.toLocaleString('id-ID');
+const rp = n => 'Rp' + fmt(n);
+const stage = document.getElementById('stage');
+const slides = [...document.querySelectorAll('.slide')];
+const N = slides.length;
+let scale = 1;
+
+function fit(){ scale = Math.min(innerWidth / 1600, innerHeight / 900); stage.style.setProperty('--s', scale); }
+addEventListener('resize', fit); fit();
+
+slides.forEach(s => s.querySelectorAll('.a').forEach((el, i) => el.style.setProperty('--i', i)));
+
+function countUp(el){
+  const end = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0), suf = el.dataset.suffix || '';
+  const out = v => (dec ? v.toFixed(dec).replace('.', ',') : fmt(Math.round(v))) + suf;
+  if (reduce) { el.textContent = out(end); return; }
+  el.textContent = out(0);
+  const t0 = performance.now() + 450, d = 1400;
+  (function tick(t){ const p = Math.max(0, Math.min(1, (t - t0) / d)), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = out(end * e); if (p < 1) requestAnimationFrame(tick); })(performance.now());
+}
+
+const C = 2 * Math.PI * 72;
+function ring(card){
+  const bar = card.querySelector('.rbar'), pct = card.querySelector('.pct'), v = +card.dataset.ring;
+  bar.style.stroke = card.dataset.color; bar.style.strokeDasharray = C;
+  bar.style.transition = 'none'; bar.style.strokeDashoffset = C;
+  setTimeout(() => { bar.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(.2,.8,.2,1)'; bar.style.strokeDashoffset = C * (1 - v / 100); }, 500);
+  const t0 = performance.now() + 500, d = reduce ? 1 : 1800;
+  (function tick(t){ const p = Math.max(0, Math.min(1, (t - t0) / d)), e = 1 - Math.pow(1 - p, 3);
+    pct.textContent = (v * e).toFixed(1).replace('.', ',') + '%'; if (p < 1) requestAnimationFrame(tick); })(performance.now());
+}
+
+/* compare */
+const CMP = {
+  save:{n:443,o:103,f:fmt,x:'4,3x',t:'lebih banyak orang yang save konten Maudon'},
+  share:{n:355,o:158,f:fmt,x:'2,2x',t:'lebih banyak orang yang share ke teman/keluarga'},
+  cps:{n:12414,o:39604,f:rp,x:'3,2x',t:'lebih murah untuk setiap 1 save'},
+  cpsh:{n:15490,o:25818,f:rp,x:'1,7x',t:'lebih murah untuk setiap 1 share'},
+  spend:{n:5.50,o:4.08,f:v=>'Rp'+v.toFixed(2).replace('.',',')+' Jt',x:'+35%',t:'budget lebih besar karena iterasi konten ditambah, tapi hasilnya naik jauh lebih tinggi'}
+};
+let curCmp = 'save';
+const cN = document.getElementById('cmpNew'), cO = document.getElementById('cmpOld');
+function setCmp(k){
+  curCmp = k; const d = CMP[k], max = Math.max(d.n, d.o);
+  cN.style.width = Math.max(10, d.n / max * 100) + '%';
+  cO.style.width = Math.max(10, d.o / max * 100) + '%';
+  document.getElementById('cmpNewV').textContent = d.f(d.n);
+  document.getElementById('cmpOldV').textContent = d.f(d.o);
+  document.getElementById('cmpX').textContent = d.x;
+  document.getElementById('cmpTxt').textContent = d.t;
+}
+document.querySelectorAll('#cmpToggle button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#cmpToggle button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); setCmp(b.dataset.k); b.blur();
+});
+
+/* ICP */
+const P = {cream:'#F7F0E1', yellow:'#F2C14E', navy:'#1E2A47', brick:'#B4472F', check:'#F6E3A6'};
+const ICP = [
+ {name:'Pasangan', tag:'UNTUK PASANGAN', desc:'Untuk yang mau kasih kejutan ke pasangan yang lebih suka makanan gurih daripada manis.', ads:[
+  ['P01_Tim_Gurih','cream','whole','PACARMU TIM GURIH?','Kejutkan dia dengan Mentai Cake.','Pesan via WhatsApp','Pasangan kamu tim gurih, bukan manis? Mentai Cake jawabannya, bukan cake biasa. Base nasi, isi daging, saus mentai creamy. Cek @maudon.id.'],
+  ['P02_Kejutan_Mentai','brick','cut','ULTAHNYA? KASIH MENTAI.','Kue ulang tahun gurih buat pasangan.','Pesan via WhatsApp','Ulang tahun pasangan udah bosan kue manis yang itu-itu? Mentai Cake beda total, gurih sampai bawah. Lihat variannya di @maudon.id.'],
+  ['P03_Favoritnya_Mentai','yellow','slice','BUAT DIA YANG DOYAN MENTAI.','Mentai favoritnya, dalam bentuk cake.','Pesan via WhatsApp','Pasangan doyan mentai? Sekarang ada dalam bentuk cake ulang tahun. Follow @maudon.id, cek variannya.'],
+  ['P04_Makan_Berdua','check','table','TIUP LILIN. MAKAN BERDUA.','Mentai Cake buat birthday dinner di rumah.','Pesan via WhatsApp','Rayain ultah pasangan di rumah aja. Tiup lilin, makan berdua, Mentai Cake gurih bukan manis. Cek @maudon.id.'],
+  ['P05_Selingan_Gurih','cream','whole','SUDAH DAPAT BANYAK KUE?','Kirim selingan gurih buat ulang tahunnya.','Cek tanggal pesanan','Kadonya udah banyak kue manis? Kirim Mentai Cake, selingan gurih yang beda sendiri. Cek ukurannya di @maudon.id.']]},
+ {name:'Sahabat & Keluarga', tag:'UNTUK SAHABAT & KELUARGA', desc:'Untuk acara kumpul bareng sahabat atau keluarga yang sudah bosan kue manis.', ads:[
+  ['S01_Kulkas_Penuh','cream','cut','TIGA CAKE MANIS DI KULKAS?','Bawakan Mentai Cake buat dimakan bareng.','Pesan via WhatsApp','Kulkas udah penuh kue manis? Bawa Mentai Cake, gurih dan pasti dicariin duluan. Follow @maudon.id.'],
+  ['S02_Langsung_Disendok','yellow','slice','BUKA BOX. LANGSUNG SENDOK.','Mentai Cake buat kumpul keluarga.','Pesan via WhatsApp','Buka box, langsung sendok rame-rame. Mentai Cake cocok buat kumpul keluarga. Cek @maudon.id.'],
+  ['S03_Sahabat_Tim_Gurih','brick','cut','SAHABAT ULTAH? BAWA MENTAI.','Kue gurih buat dinikmati satu geng.','Pesan via WhatsApp','Sahabat ultah, satu geng nggak doyan manis? Bawa Mentai Cake, gurih buat semua. Lihat variannya di @maudon.id.'],
+  ['S04_Satu_Meja','check','table','SATU CAKE. SATU MEJA.','Mentai Cake buat ultah keluarga.','Tanya pilihan ukuran','Satu cake, satu meja, satu keluarga. Mentai Cake tersedia beberapa ukuran. Tanya di @maudon.id.'],
+  ['S05_Jarang_Makan_Cake','cream','cut','"AKU JARANG MAKAN CAKE."','Kasih Mentai Cake yang gurih.','Pesan via WhatsApp','Ada yang jarang makan cake karena kemanisan? Kasih Mentai Cake yang gurih. Follow @maudon.id.']]},
+ {name:'Rekan Kerja', tag:'UNTUK ULTAH KANTOR', desc:'Untuk ulang tahun dan patungan di kantor, terutama PIC yang harus siapkan kue untuk satu tim.', ads:[
+  ['K01_Ultah_Kantor','cream','cut','ULTAH ANAK KANTOR?','Bawa Mentai Cake buat dibagi satu tim.','Pesan via WhatsApp','Ada yang ultah di kantor? Jangan kue manis lagi. Mentai Cake bisa dibagi satu tim. Cek @maudon.id.'],
+  ['K02_Patungan','yellow','cut','PATUNGAN BUAT SATU TIM?','Pilih ukuran sesuai jumlah orang.','Tanya pilihan ukuran','Lagi patungan ultah rekan kerja? Mentai Cake ada beberapa ukuran, sesuaikan jumlah orang. Tanya di @maudon.id.'],
+  ['K03_Meeting_Room','cream','cut','CAKE ULTAH BUAT JAM MAKAN SIANG.','Pilihan gurih untuk ultah rekan kerja.','Pesan via WhatsApp','Rayain ultah rekan kerja pas jam makan siang. Mentai Cake gurih, pas dimakan rame-rame. Cek @maudon.id.'],
+  ['K04_Giliran_Gurih','navy','whole','CAKE MANIS LAGI? GILIRAN MENTAI.','Kue ultah gurih buat satu kantor.','Pesan via WhatsApp','Kantor udah sering beli kue manis? Giliran Mentai Cake, gurih dan beda. Follow @maudon.id.'],
+  ['K05_PIC_Ultah','check','table','JADI PIC ULTAH DI KANTOR?','Siapkan Mentai Cake buat satu tim.','Cek tanggal & ukuran','Jadi PIC ultah kantor? Gampangin kerjaanmu dengan Mentai Cake. Cek tanggal dan ukuran di @maudon.id.']]},
+ {name:'Ultah Anak', tag:'UNTUK ULTAH ANAK', desc:'Untuk orang tua yang cari kue ulang tahun anak yang tidak terlalu manis, terutama perayaan di rumah.', ads:[
+  ['A01_Anak_Tim_Gurih','cream','whole','ANAKNYA TIM GURIH?','Pilih Mentai Cake untuk ulang tahunnya.','Pesan via WhatsApp','Anaknya nggak suka kue manis? Mentai Cake pilihan ulang tahun yang gurih. Cek varian dan ukuran di @maudon.id.'],
+  ['A02_Tiup_Lilin','check','table','HABIS TIUP LILIN, SEMUA NYENDOK.','Mentai Cake buat dinikmati bareng keluarga.','Pesan via WhatsApp','Habis tiup lilin, semua langsung nyendok. Mentai Cake dinikmati bareng seluruh keluarga. Follow @maudon.id.'],
+  ['A03_Request_Mentai','brick','whole','MINTANYA MENTAI? JADIIN CAKE.','Pesan Mentai Cake buat ultah anak.','Pesan via WhatsApp','Anak doyan mentai? Sekarang bisa jadi kue ulang tahunnya. Pesan lewat @maudon.id.'],
+  ['A04_Ultah_Di_Rumah','cream','cut','ULTAH ANAK DI RUMAH?','Siapkan cake gurih buat dibagi di meja.','Tanya pilihan ukuran','Rayain ultah anak di rumah, siapin Mentai Cake buat dibagi di meja. Tanya ukurannya di @maudon.id.'],
+  ['A05_Makan_Siang','yellow','slice','KUE ULTAH SEKALIAN MAKAN SIANG.','Mentai Cake untuk dinikmati setelah tiup lilin.','Pesan via WhatsApp','Kue ultah anak sekalian makan siang. Mentai Cake gurih, mengenyangkan. Cek @maudon.id buat pesan.']]}
+];
+function cakeSVG(kind){
+  const top = `<ellipse cx="60" cy="38" rx="44" ry="13" fill="#F5E6C4"/><circle cx="44" cy="35" r="3.2" fill="#E58FA8"/><circle cx="60" cy="31" r="3" fill="#A77BC9"/><circle cx="74" cy="37" r="3.2" fill="#E58FA8"/><circle cx="54" cy="41" r="2.4" fill="#A77BC9"/>`;
+  const body = `<path d="M16 38v30c0 7 20 13 44 13s44-6 44-13V38c0 7-20 13-44 13S16 45 16 38z" fill="#D9A04A"/><path d="M16 46c0 7 20 13 44 13s44-6 44-13" stroke="#C4873A" stroke-width="1.4" fill="none" stroke-dasharray="2 3"/>`;
+  const board = `<ellipse cx="60" cy="72" rx="54" ry="15" fill="#1a1a1a"/>`;
+  if (kind === 'slice') return `<svg viewBox="0 0 120 100"><ellipse cx="60" cy="80" rx="52" ry="12" fill="#9AA79B"/><path d="M22 42 L98 34 L98 66 L22 76z" fill="#F7F3EA"/><path d="M22 52 L98 44 L98 58 L22 68z" fill="#F08A3C"/><path d="M22 47 L98 39" stroke="#F5E6C4" stroke-width="6"/><circle cx="40" cy="58" r="2" fill="#F7D04A"/><circle cx="66" cy="54" r="2" fill="#F7D04A"/><circle cx="84" cy="52" r="2" fill="#F7D04A"/><circle cx="50" cy="40" r="3" fill="#E58FA8"/><circle cx="76" cy="37" r="3" fill="#A77BC9"/></svg>`;
+  if (kind === 'table') return `<svg viewBox="0 0 120 100"><rect x="2" y="60" width="116" height="38" rx="4" fill="#fff" opacity=".55"/><rect x="34" y="52" width="52" height="8" rx="2" fill="#fff"/><rect x="56" y="60" width="8" height="20" fill="#fff"/><path d="M38 28 h44 v24 h-44z" fill="#D9A04A"/><ellipse cx="60" cy="28" rx="22" ry="6" fill="#F5E6C4"/><path d="M60 28 L82 28 L82 52 L60 52z" fill="#F08A3C"/><rect x="4" y="74" width="24" height="16" rx="2" fill="#D9A04A"/><ellipse cx="16" cy="74" rx="12" ry="3.5" fill="#F5E6C4"/><ellipse cx="102" cy="86" rx="14" ry="4" fill="#7FA48A"/><rect x="92" y="72" width="20" height="13" rx="2" fill="#D9A04A"/><ellipse cx="102" cy="72" rx="10" ry="3" fill="#F5E6C4"/></svg>`;
+  const cut = kind === 'cut' ? `<path d="M60 51 L60 81 L94 74 L94 44z" fill="#F7F3EA"/><path d="M60 58 L94 51 L94 66 L60 73z" fill="#F08A3C"/><circle cx="72" cy="65" r="1.8" fill="#F7D04A"/><circle cx="84" cy="61" r="1.8" fill="#F7D04A"/>` : '';
+  return `<svg viewBox="0 0 120 100">${board}${body}${cut}${top}<rect x="56" y="18" width="8" height="10" rx="2" fill="#1E2A47"/></svg>`;
+}
+const THEME = {
+  cream:{bg:P.cream, disc:P.yellow, hl:P.navy, hlc:'#fff', txt:P.navy},
+  yellow:{bg:P.yellow, disc:P.cream, hl:P.navy, hlc:'#fff', txt:P.navy},
+  brick:{bg:P.brick, disc:P.cream, hl:P.yellow, hlc:P.navy, txt:'#fff'},
+  navy:{bg:P.navy, disc:P.yellow, hl:P.cream, hlc:P.navy, txt:'#fff'},
+  check:{bg:`repeating-conic-gradient(${P.check} 0 25%, #FFF8E4 0 50%) 0 0/20px 20px`, disc:'transparent', hl:P.brick, hlc:'#fff', txt:P.navy}
+};
+const tabs = document.getElementById('icpTabs');
+let curICP = 0;
+ICP.forEach((c, i) => {
+  const b = document.createElement('button');
+  b.textContent = `ICP ${i + 1} · ${c.name}`;
+  b.onclick = () => { showICP(i); b.blur(); };
+  tabs.appendChild(b);
+});
+function showICP(i){
+  curICP = i;
+  [...tabs.children].forEach((b, j) => b.classList.toggle('on', i === j));
+  const c = ICP[i], box = document.getElementById('ads');
+  document.getElementById('icpDesc').textContent = c.desc;
+  box.innerHTML = '';
+  c.ads.forEach((a, j) => {
+    const [fn, bg, kind, hl, sub, cta, pt] = a, t = THEME[bg];
+    const tag = j % 2 === 0 && kind !== 'table' && kind !== 'slice' ? c.tag : 'MENTAI CAKE';
+    const el = document.createElement('div');
+    el.className = 'ad'; el.style.animationDelay = (j * 80 + 100) + 'ms';
+    el.innerHTML = `<div class="ad-in">
+      <div class="face front" style="background:${t.bg};color:${t.txt}">
+        <div class="logo">MAUDON</div><div class="tag">${tag}</div>
+        <div class="stage"><div class="disc" style="background:${t.disc}"></div>${cakeSVG(kind)}</div>
+        <div class="hl" style="background:${t.hl};color:${t.hlc}">${hl}</div>
+        <div class="sub">${sub}</div>
+        <div class="cta">${cta} · @maudon.id</div>
+      </div>
+      <div class="face back">
+        <div class="k">Teks iklan</div><p>"${pt}"</p>
+        <div class="k" style="margin-top:4px">Tombol</div><p>Lihat profil Instagram</p>
+        <div class="fn">${fn.replace(/_/g, ' ')}</div>
+      </div></div>`;
+    el.onclick = () => el.classList.toggle('flip');
+    box.appendChild(el);
+  });
+}
+
+/* winners */
+const WIN = [
+ ['Existing Reels - 2 (MOFU)',5441,7929,'955567463869782'],
+ ['Existing Reels - Kokyruma',8197,6636,'1100673399445447'],
+ ['Social Proof - Jakarta',6414,9621,'1138930291919914'],
+ ['Social Proof - Murah',10653,5878,'2624066941436866'],
+ ['Social Proof - Ramai',9096,8590,'1557677609711018'],
+ ['Video 10',9558,9558,'1792716369250929'],
+ ['Existing Reels - 2 (Targeted Audience)',9901,11949,'1119383773962374'],
+ ['Social Proof - Creator Surprise',8501,14684,'1144354311453178']
+];
+const SCALE = 18000, KPI = 15000, wl = document.getElementById('winList');
+const nodes = WIN.map(w => {
+  const el = document.createElement('div'); el.className = 'card win';
+  const bar = (lbl, v) => `<div class="mbar"><div class="t"><span>${lbl}</span><b class="tnum">${rp(v)}</b></div><div class="tr"><i data-w="${v / SCALE * 100}%"></i><span class="kpi" style="left:${KPI / SCALE * 100}%"></span></div></div>`;
+  el.innerHTML = `<div class="rank"></div><div class="name">${w[0]}</div>${bar('Per save', w[1])}${bar('Per share', w[2])}<a class="watch" href="https://www.facebook.com/114102223327320/videos/${w[3]}" target="_blank" rel="noopener">▶ Lihat</a>`;
+  el._d = {cps:w[1], cpsh:w[2], avg:(w[1] + w[2]) / 2};
+  wl.appendChild(el); return el;
+});
+function sortWin(k){
+  const first = nodes.map(n => n.getBoundingClientRect().top);
+  [...nodes].sort((a, b) => a._d[k] - b._d[k]).forEach((n, i) => { n.querySelector('.rank').textContent = i + 1; wl.appendChild(n); });
+  if (reduce) return;
+  nodes.forEach((n, i) => {
+    const dy = (first[i] - n.getBoundingClientRect().top) / scale;
+    if (!dy) return;
+    n.style.transition = 'none'; n.style.transform = `translateY(${dy}px)`;
+    requestAnimationFrame(() => requestAnimationFrame(() => { n.style.transition = ''; n.style.transform = ''; }));
+  });
+}
+document.querySelectorAll('.sorter .chip').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.sorter .chip').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); sortWin(b.dataset.s); b.blur();
+});
+sortWin('cps');
+
+/* paused */
+const W = ['Hari ini','Kemarin','3 hari','7 hari'];
+const PAUSED = {
+ weak:[
+  ['MOFU Maudon - Mamarineats','Hampir tidak ada save/share meski spend jalan terus',[[0,0],[0,0],[85644,42822],[41955,104888]]],
+  ['MOFU - Story only Image (1-5)','Nol save/share di semua periode meski ada spend',[[0,0],[0,0],[0,0],[0,0]]],
+  ['MOFU - Video (6-10)','Biaya per save/share jauh di atas target',[[0,25612],[30263,0],[41962,83924],[20001,25002]]],
+  ['Targeted Audience - hardsell 1','Tidak stabil, gagal di keempat periode',[[14184,7092],[0,0],[7965,18584],[17441,10733]]],
+  ['MOFU Maudon - Why Us 4','Biaya per share di atas target di semua periode',[[0,28797],[11966,23931],[17490,13992],[13447,15892]]],
+  ['MOFU Maudon - Why Us 5','Biaya per share naik di 3 & 7 hari terakhir',[[0,0],[11492,11492],[14179,17724],[9163,15827]]]
+ ],
+ border:[
+  ['MOFU Maudon - Existing Reels','Rp5,5–8rb di 7 hari, naik tipis kemarin',[[11142,6685],[9412,12549],[7005,7443],[5481,7986]]],
+  ['Targeted Audience - Existing Reels','Lolos 3 & 7 hari, naik di hari ini & kemarin',[[11549,17323],[16293,12220],[11381,9863],[9925,11978]]],
+  ['MOFU Maudon - Why Us 3','Lolos 3 periode, cuma kemarin yang naik',[[7483,7483],[18611,9306],[8550,7600],[10859,5792]]],
+  ['MOFU Maudon - Why Us 2','Lolos 3 & 7 hari, naik di hari ini & kemarin',[[24371,24371],[6890,20669],[7819,10053],[10286,9204]]]
+ ]
+};
+const ok = ([s, h]) => s > 0 && h > 0 && s < 12500 && h < 12500;
+const cell = v => v ? rp(v) : 'tidak ada';
+function renderPaused(list, id){
+  const box = document.getElementById(id);
+  list.forEach(([name, note, ws]) => {
+    const a = document.createElement('div'); a.className = 'acc';
+    a.innerHTML = `<button><span>${name}</span><span style="display:flex;gap:12px;align-items:center"><span class="mini-pills">${ws.map(w => `<i class="${ok(w) ? 'ok' : 'no'}"></i>`).join('')}</span><svg class="ar" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="body"><div><p style="font-size:15px;color:var(--muted);margin-bottom:10px">${note}</p><div class="wins">${ws.map((w, i) => `<div class="wcell ${ok(w) ? 'ok' : 'no'}"><b>${W[i]}</b>Save ${cell(w[0])}<br>Share ${cell(w[1])}</div>`).join('')}</div></div></div>`;
+    const btn = a.querySelector('button');
+    btn.onclick = () => { const was = a.classList.contains('open'); box.querySelectorAll('.acc').forEach(x => x.classList.remove('open')); if (!was) a.classList.add('open'); btn.blur(); };
+    box.appendChild(a);
+  });
+}
+renderPaused(PAUSED.weak, 'pWeak'); renderPaused(PAUSED.border, 'pBorder');
+
+/* budget */
+const B = [
+ ['4 ICP · Custom Audience','Follower & engager Maudon',100000,'#1E2A47'],
+ ['4 ICP · Interest Targeting','Interest + lokasi',100000,'#2E3D63'],
+ ['3 Winning Content','Audience baru, radius KG & Tj. Duren',90000,'#B4472F'],
+ ['4 Konten lama · lanjut jalan','Existing Reels ×2, Why Us 2 & 3',80000,'#C77A5E'],
+ ['2 Retargeting','CA 365 + Follow, CA 30 hari',50000,'#D9A633'],
+ ['Konten lama efisien','Existing Reels – Kokyruma',20000,'#7FA48A']
+];
+const st = document.getElementById('stack'), bl = document.getElementById('bLegend');
+B.forEach(b => {
+  const s = document.createElement('div'); s.style.background = b[3]; s.dataset.w = (b[2] / 4400) + '%';
+  s.textContent = b[2] >= 50000 ? Math.round(b[2] / 4400) + '%' : '';
+  const l = document.createElement('div'); l.className = 'b-item';
+  l.innerHTML = `<span class="sw" style="background:${b[3]}"></span><span class="nm">${b[0]}<small>${b[1]}</small></span><span class="val tnum">${rp(b[2])}</span>`;
+  const on = v => { s.classList.toggle('hl', v); l.classList.toggle('hl', v); };
+  [s, l].forEach(x => { x.onmouseenter = () => on(true); x.onmouseleave = () => on(false); });
+  st.appendChild(s); bl.appendChild(l);
+});
+
+/* per-slide enter animations (replay every time) */
+function enter(s){
+  s.querySelectorAll('[data-count]').forEach(countUp);
+  s.querySelectorAll('[data-ring]').forEach(ring);
+  if (s.contains(cN)) {
+    [cN, cO].forEach(x => { x.style.transition = 'none'; x.style.width = '0'; });
+    void cN.offsetWidth; [cN, cO].forEach(x => x.style.transition = '');
+    setTimeout(() => setCmp(curCmp), 650);
+  }
+  if (s.dataset.k === 'icp') showICP(curICP);
+  if (s.dataset.k === 'win') {
+    const bars = s.querySelectorAll('.tr i');
+    bars.forEach(i => { i.style.transition = 'none'; i.style.width = 0; }); void s.offsetWidth;
+    setTimeout(() => bars.forEach(i => { i.style.transition = ''; i.style.width = i.dataset.w; }), 700);
+  }
+  if (s.dataset.k === 'budget') {
+    const segs = [...st.children];
+    segs.forEach(d => { d.style.transition = 'none'; d.style.width = 0; }); void st.offsetWidth;
+    segs.forEach((d, i) => setTimeout(() => { d.style.transition = ''; d.style.width = d.dataset.w; }, 600 + i * 130));
+  }
+}
+
+/* navigation */
+const dots = document.getElementById('dots'), pbar = document.getElementById('pbar'), cnt = document.getElementById('cnt');
+slides.forEach((_, i) => { const d = document.createElement('i'); d.onclick = () => go(i); dots.appendChild(d); });
+let cur = -1;
+const pad = n => String(n).padStart(2, '0');
+function go(i){
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur) return;
+  slides.forEach((s, j) => { s.classList.toggle('on', j === i); s.classList.toggle('prev', j < i); });
+  const s = slides[i];
+  s.querySelectorAll('.a').forEach(el => { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
+  enter(s);
+  cur = i;
+  [...dots.children].forEach((d, j) => d.classList.toggle('on', j === i));
+  pbar.style.width = ((i + 1) / N * 100) + '%';
+  cnt.textContent = pad(i + 1) + ' / ' + pad(N);
+  stage.classList.toggle('dark-ui', s.hasAttribute('data-dark'));
+  history.replaceState(null, '', '#' + (i + 1));
+}
+document.getElementById('next').onclick = e => { go(cur + 1); e.currentTarget.blur(); };
+document.getElementById('prev').onclick = e => { go(cur - 1); e.currentTarget.blur(); };
+document.getElementById('fs').onclick = e => { toggleFS(); e.currentTarget.blur(); };
+function toggleFS(){ if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); }
+addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+  else if (['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  else if (e.key === 'Home') go(0);
+  else if (e.key === 'End') go(N - 1);
+  else if (e.key === 'f' || e.key === 'F') toggleFS();
+});
+let tx = null;
+addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1)); tx = null; });
+
+/* hide controls & cursor when mouse idle — clean for screen recording */
+let idleT;
+function wake(){ document.body.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(() => document.body.classList.add('idle'), 2500); }
+addEventListener('mousemove', wake); wake();
+
+go(Math.max(0, Math.min(N - 1, (parseInt(location.hash.slice(1)) || 1) - 1)));
+})();
+</script>
+</body>
+</html>
